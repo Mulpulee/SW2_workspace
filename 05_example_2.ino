@@ -1,5 +1,4 @@
 #define PIN_LED 7
-unsigned int count, toggle;
 
 void setup()
 {
@@ -26,3 +25,4 @@ void loop()
   digitalWrite(PIN_LED, 1);
   while (1) {}
 }
+
