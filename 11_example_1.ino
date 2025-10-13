@@ -67,11 +67,14 @@ void loop() {
   // the range filter
   if ((dist_raw == 0.0) || (dist_raw > _DIST_MAX)) {
       dist_filtered = dist_prev;
+      digitalWrite(PIN_LED, 1);
   } else if (dist_raw < _DIST_MIN) {
       dist_filtered = dist_prev;
+      digitalWrite(PIN_LED, 1);
   } else {    // In desired Range
       dist_filtered = dist_raw;
       dist_prev = dist_raw;
+      digitalWrite(PIN_LED, 0);
   }
 
   // Modify the below line to implement the EMA equation
@@ -82,14 +85,11 @@ void loop() {
 
   if (dist_ema <= _TARGET_LOW) {
     myservo.writeMicroseconds(_DUTY_MIN);
-    //digitalWrite(PIN_LED, 1);
   } else if (dist_ema < _TARGET_HIGH) {
     float angle = (dist_ema - _TARGET_LOW) / 180.0 * 3000;
     myservo.writeMicroseconds(angle);
-    //digitalWrite(PIN_LED, 0);
   } else {
     myservo.writeMicroseconds(_DUTY_MAX);
-    //digitalWrite(PIN_LED, 1);
   }
 
   
@@ -115,3 +115,4 @@ float USS_measure(int TRIG, int ECHO)
   
   return pulseIn(ECHO, HIGH, TIMEOUT) * SCALE; // unit: mm
 }
+
